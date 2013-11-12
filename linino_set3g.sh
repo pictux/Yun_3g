@@ -10,6 +10,7 @@
 
 IFCONF=/etc/config/network 
 TGCHAT=/etc/chatscripts/3g.chat
+FWCONF=/etc/config/firewall
 
 DEV="" 
 PIN="" 
@@ -74,4 +75,10 @@ fi
 
 /bin/sed 's/ATD\*99\*\*\*1\#/ATD\*99\#/' $TGCHAT.bck0 > $TGCHAT
 
+#UPDATE FIREWALL CONF
+if ! [ -r $FWCONF.bck0 ]; then
+        /bin/cat $FWCONF > $FWCONF.bck0
+fi
+
+/bin/sed {s/\'wan\'/\'wan\ wan2\'/} $FWCONF.bck0 > $FWCONF
 
