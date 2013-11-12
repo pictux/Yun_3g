@@ -6,65 +6,66 @@
 
 #include <Process.h>
 
+static String APN="internet.wind"; //provider apn
+static String PIN="1131";  //sim pin (disabled pin is a problem!)
+static String DEVICE="/dev/ttyUSB0"; //don't touch here if you don't know what it is
+
 void setup() {
-  Bridge.begin();	// Initialize the Bridge
-  Serial.begin(9600);	// Initialize the Serial
+  Bridge.begin();	
+  Serial.begin(9600);	
 
-  Process p;  
+  Process p;
 
-  // Wait until a Serial Monitor is connected.
   while(!Serial);
 
   Serial.println("**Set 3G/UMTS environment**");
   Serial.println();
-  Serial.println("Updating repository...");
+  Serial.println("Downloading script for setting up 3G...");
 
-  p.runShellCommand("/bin/opkg update");
-  while(p.running()); 
-  while (p.available()>0) {
+  p.runShellCommand("/usr/bin/curl -k https://raw.github.com/pictux/Yun_3g/master/linino_set3g.sh -o /tmp/linino_set3g.sh");
+  while(p.running());  
+  while (p.available()) {
     char c = p.read();
     Serial.print(c);
-  }  
-  
+  } 
+
   Serial.println();
-  Serial.println("Installing needed packages...");
+  Serial.println("Chmod script...");
 
-  p.runShellCommand("/bin/opkg install unzip kmod-usb2 kmod-usb-core kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch usb-modeswitch-data libusb-1.0 comgt chat");
-  while(p.running()); 
-  while (p.available()>0) {
+  p.runShellCommand("/bin/chmod +x /tmp/linino_set3g.sh ");
+  while(p.running());  
+  while (p.available()) {
     char c = p.read();
     Serial.print(c);
-  }
-  
+  } 
+
+
   Serial.println();
-  Serial.println("Downloading & installing luci 3G conf page...");
+  Serial.println("Execute script...");
 
-  p.runShellCommand("/usr/bin/curl -k https://raw.github.com/pictux/Yun_3g/master/luci-proto-3g_svn-r9931-1_ar71xx.ipk -o /tmp/luci-proto-3g_svn-r9931-1_ar71xx.ipk");
-  while(p.running()); 
-  while (p.available()>0) {
+  p.runShellCommand("/tmp/linino_set3g.sh -p " + PIN + " -a " + APN + " -d " + DEVICE);
+  while(p.running());  
+  while (p.available()) {
     char c = p.read();
     Serial.print(c);
-  }
-
-  p.runShellCommand("/bin/opkg install /tmp/luci-proto-3g_svn-r9931-1_ar71xx.ipk");
-  while(p.running()); 
-  while (p.available()>0) {
-    char c = p.read();
-    Serial.print(c);
-  }
+  } 
 
   Serial.println();
   Serial.println("***** ALL DONE *****");
   Serial.println();
   Serial.println("Rebooting...");
   p.runShellCommand("/sbin/reboot");
-  
+
   Serial.flush();
 }
 
 void loop() {
-
+  //nothing to do here *
 }
+
+
+
+
 
 
 
