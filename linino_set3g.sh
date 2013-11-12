@@ -57,7 +57,7 @@ fi
 /bin/cat $IFCONF.bck0 > $IFCONF
 
 /bin/cat <<EOF >> $IFCONF
-config interface wan
+config interface wan2
         option ifname  ppp0
         option pincode $PIN
         option device  $DEV
