@@ -71,8 +71,8 @@ EOF
 #SCRIPT TO CHECK CONNECTIVITY
 /bin/cat <<EOF > $CHECK3G
 #!/bin/sh
-if ! ping -q -c 1 -W 10 -I 3g-wan 8.8.8.8 > /dev/null; then
-	(ifup wan; sleep 5; /etc/init.d/multiwan restart) &
+if ! ping -q -c 1 -W 10 -I 3g-wan2 8.8.8.8 > /dev/null; then
+	(ifup wan2) &
 fi
 EOF
 
