@@ -11,6 +11,7 @@
 IFCONF=/etc/config/network 
 TGCHAT=/etc/chatscripts/3g.chat
 FWCONF=/etc/config/firewall
+CHECK3G=/root/check3g.sh
 
 DEV="" 
 PIN="" 
@@ -67,6 +68,18 @@ config interface wan2
         option proto   3g
 EOF
 
+#SCRIPT TO CHECK CONNECTIVITY
+/bin/cat <<EOF > $CHECK3G
+#!/bin/sh
+if ! ping -q -c 1 -W 10 -I 3g-wan 8.8.8.8 > /dev/null; then
+	(ifup wan; sleep 5; /etc/init.d/multiwan restart) &
+fi
+EOF
+
+/bin/chmod $CHECK3G 755
+
+#UPDATE ROOT CRONTAB
+/bin/echo "*/2 * * * * /root/$CHECK3G" >> /etc/crontabs/root
 
 #UPDATE CHAT SCRIPT
 if ! [ -r $TGCHAT.bck0 ]; then
@@ -81,4 +94,9 @@ if ! [ -r $FWCONF.bck0 ]; then
 fi
 
 /bin/sed {s/\'wan\'/\'wan\ wan2\'/} $FWCONF.bck0 > $FWCONF
+
+#RESTART CRON
+/etc/init.d/cron restart
+
+#DO A REBOOT!
 
