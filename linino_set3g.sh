@@ -4,7 +4,7 @@
 #		then configure network device 
 #author	: Mirco Piccin (www.xuni.it | www.pictux.org)
 #date	: 2013-11
-#version : 0.1
+#version : 0.2
 #usage	: sh linino_set3g.sh -d DEVICE -a APN -p PIN
 #disabled PIN is a problem!
 
