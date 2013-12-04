@@ -86,7 +86,21 @@ if ! [ -r $TGCHAT.bck0 ]; then
 	/bin/cat $TGCHAT > $TGCHAT.bck0
 fi
 
-/bin/sed 's/ATD\*99\*\*\*1\#/ATD\*99\#/' $TGCHAT.bck0 > $TGCHAT
+/bin/cat <<EOF > $TGCHAT
+ABORT   BUSY
+ABORT   'NO CARRIER'
+ABORT   ERROR
+REPORT  CONNECT
+TIMEOUT 10
+""      "AT&F"
+OK      "ATE1"
+OK      'AT+CGDCONT=1,"IP","$USE_APN"'
+SAY     "Calling UMTS/EDGE/GPRS"
+""      "AT+SYSCFG=2,2,3FFFFFFF,1,4" 
+TIMEOUT 30
+OK      "ATD*99#"
+CONNECT ''
+EOF
 
 #UPDATE FIREWALL CONF
 if ! [ -r $FWCONF.bck0 ]; then
