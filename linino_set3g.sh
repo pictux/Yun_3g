@@ -94,7 +94,7 @@ REPORT  CONNECT
 TIMEOUT 10
 ""      "AT&F"
 OK      "ATE1"
-OK      'AT+CGDCONT=1,"IP","$USE_APN"'
+OK      'AT+CGDCONT=1,"IP","\$USE_APN"'
 SAY     "Calling UMTS/EDGE/GPRS"
 ""      "AT+SYSCFG=2,2,3FFFFFFF,1,4" 
 TIMEOUT 30
