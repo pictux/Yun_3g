@@ -79,7 +79,7 @@ EOF
 /bin/chmod $CHECK3G 755
 
 #UPDATE ROOT CRONTAB
-/bin/echo "*/2 * * * * /root/$CHECK3G" >> /etc/crontabs/root
+/bin/echo "*/2 * * * * $CHECK3G" >> /etc/crontabs/root
 
 #UPDATE CHAT SCRIPT
 if ! [ -r $TGCHAT.bck0 ]; then
@@ -96,7 +96,6 @@ TIMEOUT 10
 OK      "ATE1"
 OK      'AT+CGDCONT=1,"IP","\$USE_APN"'
 SAY     "Calling UMTS/EDGE/GPRS"
-""      "AT+SYSCFG=2,2,3FFFFFFF,1,4" 
 TIMEOUT 30
 OK      "ATD*99#"
 CONNECT ''
