@@ -44,7 +44,7 @@ fi
 wait
 /bin/opkg install unzip kmod-usb2 kmod-usb-core kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch usb-modeswitch-data libusb-1.0 comgt chat
 wait
-/usr/bin/curl -k https://raw.github.com/pictux/Yun_3g/master/luci-proto-3g_svn-r9931-1_ar71xx.ipk -o /tmp/luci-proto-3g_svn-r9931-1_ar71xx.ipk
+/usr/bin/curl -k https://raw.githubusercontent.com/pictux/Yun_3g/master/luci-proto-3g_svn-r9931-1_ar71xx.ipk -o /tmp/luci-proto-3g_svn-r9931-1_ar71xx.ipk
 wait
 /bin/opkg install /tmp/luci-proto-3g_svn-r9931-1_ar71xx.ipk
 

@@ -22,7 +22,7 @@ void setup() {
   Serial.println();
   Serial.println("Downloading script for setting up 3G...");
 
-  p.runShellCommand("/usr/bin/curl -k https://raw.github.com/pictux/Yun_3g/master/linino_set3g.sh -o /tmp/linino_set3g.sh");
+  p.runShellCommand("/usr/bin/curl -k https://raw.githubusercontent.com/pictux/Yun_3g/master/linino_set3g.sh -o /tmp/linino_set3g.sh");
   while(p.running());  
   while (p.available()) {
     char c = p.read();
