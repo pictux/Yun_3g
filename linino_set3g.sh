@@ -76,7 +76,7 @@ if ! ping -q -c 1 -W 10 -I 3g-wan2 8.8.8.8 > /dev/null; then
 fi
 EOF
 
-/bin/chmod $CHECK3G 755
+/bin/chmod 755 $CHECK3G 
 
 #UPDATE ROOT CRONTAB
 /bin/echo "*/2 * * * * $CHECK3G" >> /etc/crontabs/root
